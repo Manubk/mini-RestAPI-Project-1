@@ -10,8 +10,12 @@ spring:
       ddl-auto: update
     show-sql: true
     
-app-msg:
+app-msgs:
  messages:
-   savedsucess: savedsucessfully
-   savedunsucess: savedUnsucess
+   planSavedSucess: Saved Sucessfull
+   planSaveUnsucess: Saved UnSucessfull
+   planDeleteSucess: Deleted Sucessfull
+   planDeleteUnsucess: Deleted Unsucessfull
+   planStatusActivated: Plan Activated
+   planStatusDeactivated: Plan Deactivated
     

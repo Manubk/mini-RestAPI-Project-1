@@ -71,9 +71,13 @@ step - 3
 		->@Repository
 			->PlanCategoryRepo
 			->PlanRepo
+			
+		-> AppProperties
+			->AppMessages.clss  (which gets the messages from yaml file)
+			
+		-> constants
+			->AppConstants.class (this contains the key of massages )
 		
-		->@configuration config class
-			-> swaggerConfig
 			
 
 step - 4
@@ -86,8 +90,41 @@ step - 4
 		spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
 
 step - 5
+---------
 	-> use Swagger to test and document the API
-		-> create a config class
+		-> for spring- boot 3.0.1
+		-> use this swagger dependincy 
+		<dependency>
+   			 <groupId>org.springdoc</groupId>
+    			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+    			<version>2.0.2</version>
+		</dependency>
+	-> api documentation in url:port/swagger-ui/index.html#/
+	
+ ---------------	here out mini api project is completed  ---------------------------
+ 
+ 
+
+version - 2 optimising the code
+---------
+	
+	-> no hardcode String messages should be present in the class
+		-> place all the masseges in appication.properties or application.yaml file 
+		-> crate a class to store the massages from properties file or yaml file
+		-> create a class to access msg from yaml
+		@Data
+		@EnableConfigurationProperties
+		@ConfigurationProperties(prefix = "app-msgs")
+		@Configuration
+		public class AppMassages {
+	
+			private Map<String, String> messages = new HashMap<>();
+	
+		}
+		
+	-> create a constant massages class
+		->AppConstants
+			
 		
 
 #Tips

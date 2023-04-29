@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jrtp.Entity.Plan;
 import com.jrtp.Service.IPlanService;
 import com.jrtp.Service.PlanServiceImpl;
+import com.jrtp.constants.AppConstants;
 import com.jrtp.properties.AppMessages;
 
 @RestController
@@ -41,9 +42,8 @@ public class PlanController {
 
 	@PostMapping("/plan")
 	public ResponseEntity<String> savePlan(@RequestBody Plan plan) {
-		String msg = "";
-		msg = planService.save(plan) ? "Plan saved Sucessfully" : "unable to save plan";
-
+		String msg = AppConstants.EMPTY_STR;
+		msg = planService.save(plan) ? massages.get(AppConstants.PLAN_SAVE_SUCESS_MSG) : massages.get(AppConstants.PLAN_SAVE_UNSUCESS_MSG);
 		return new ResponseEntity<String>(msg, HttpStatus.CREATED); 
 
 	}
@@ -57,25 +57,20 @@ public class PlanController {
 	@GetMapping("/plan/{planId}")
 	public ResponseEntity<Plan> getPlanById(@PathVariable Integer planId){
 		Plan plan = planService.getPlanById(planId);
-		
 		return new ResponseEntity<Plan>(plan,HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/plan/{planId}")
 	public ResponseEntity<String> deletePlan(@PathVariable Integer planId){
-		String msg = "";
-		msg = planService.deleteById(planId)?"Deleted Sucessfully":"No Record Found";
-		
+		String msg = AppConstants.EMPTY_STR;
+		msg = planService.deleteById(planId)?massages.get(AppConstants.PLAN_DELETE_SUCESS):massages.get(AppConstants.PLAN_DELETE_UNSUCESS);
 		return new ResponseEntity<String>(msg,HttpStatus.OK);
 	}
 	
     @PutMapping("/plan/{planId}/{planStatus}")
     public ResponseEntity<String> changeStatus(@PathVariable Integer planId , @PathVariable String planStatus){
-    	
-    	String msg = "";
-    	
-    	msg = planService.changeStatus(planId, planStatus)?"SucessFull":"Failur";
-    	
+    	String msg = AppConstants.EMPTY_STR;
+    	msg = planService.changeStatus(planId, planStatus)?massages.get(AppConstants.PLAN_STATUS_ACTIVATED):massages.get(AppConstants.PLAN_STATUS_DEACTIVATED);
     	return new ResponseEntity<String>(msg,HttpStatus.OK);
     	
     }
