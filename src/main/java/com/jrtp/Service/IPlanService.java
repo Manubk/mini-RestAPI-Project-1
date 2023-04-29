@@ -3,8 +3,11 @@ package com.jrtp.Service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+
 import com.jrtp.Entity.Plan;
 
+@Service
 public interface IPlanService {
 	public Map<Integer,String> getAllCatogery();
 	public List<Plan> getAllPlans();

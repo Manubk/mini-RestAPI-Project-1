@@ -1,10 +1,10 @@
 package com.jrtp.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,20 +15,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jrtp.Entity.Plan;
-import com.jrtp.Entity.PlanCategory;
+import com.jrtp.Service.IPlanService;
 import com.jrtp.Service.PlanServiceImpl;
-
-import jakarta.persistence.criteria.CriteriaBuilder.In;
+import com.jrtp.properties.AppMessages;
 
 @RestController
 public class PlanController {
 
-	@Autowired
-	private PlanServiceImpl planService;
+	private IPlanService planService;
+	
+	private Map<String, String> massages ;
+	
+	public PlanController(IPlanService planService,AppMessages messages) {
+		this.planService = planService;
+		this.massages = messages.getMessages();
+	}
 
 	@GetMapping("/catogerys")
 	public ResponseEntity<Map<Integer, String>> getAllCatogerys() {
-
+		
 		Map<Integer, String> mapCaptogery = planService.getAllCatogery();
 		return new ResponseEntity<Map<Integer, String>>(mapCaptogery, HttpStatus.OK);
 
@@ -37,16 +42,16 @@ public class PlanController {
 	@PostMapping("/plan")
 	public ResponseEntity<String> savePlan(@RequestBody Plan plan) {
 		String msg = "";
-
 		msg = planService.save(plan) ? "Plan saved Sucessfully" : "unable to save plan";
 
-		return new ResponseEntity<String>(msg, HttpStatus.CREATED);
+		return new ResponseEntity<String>(msg, HttpStatus.CREATED); 
 
 	}
 
 	@GetMapping("/plans")
-	public ResponseEntity<String> getPlans() {
-		return new ResponseEntity<String>("hi there", HttpStatus.OK);
+	public ResponseEntity<List<Plan>> getPlans() {
+		List<Plan> plans = planService.getAllPlans();
+		return new ResponseEntity<List<Plan>>(plans, HttpStatus.OK);
 	}
 
 	@GetMapping("/plan/{planId}")

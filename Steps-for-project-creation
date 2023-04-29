@@ -2,6 +2,12 @@
 Usefull file or BLUE PRINT of Project
 #############
 
+Requirment
+-----------
+	-> Spring-Boot-3.0.6
+	-> Jdk - 17
+	-> Swaager (To test and document the RestApi) 
+
 step-1
 -------- 
 	-> analyse database table designe based on requirment
@@ -32,7 +38,7 @@ step - 2
 			->spring web
 			->spring data JPA
 			->spring devapps
-			->lombock
+			->lombok (we should download and instal lombok to out ide then add the dependencies)
 			->mysql driver
 			->h2 database
 	-> finish
@@ -40,14 +46,19 @@ step - 2
 step - 3
 ----------
 	->create required classes
-		->Entity
+		->@Entity
 			->Plan
 			->PlanCatogery
 			
-		->controller
+		->@controller
 			->PlanController
+				-> some common anotations
+					->@RestController (indecates that class is a restController)
+					->@PathVariable (that defines the url path variable to the parameter)
+					->@RequestBody (This will map the incomming json values to java objects)
+					->@GetMapping, @PostMapping, @PutMapping, @DeleteMapping.
 		
-		->service	(Business Logic)
+		->@service	(Business Logic)
 			->IPlanService
 				->public Map<Integer,String> getAllCatogerys();
 				->public List<Plan> getAllPlans();
@@ -57,9 +68,12 @@ step - 3
 				->public boolean changeStatus(Integer id , String val);
 			->PlanserviceImpl
 		
-		->Repository
+		->@Repository
 			->PlanCategoryRepo
 			->PlanRepo
+		
+		->@configuration config class
+			-> swaggerConfig
 			
 
 step - 4
@@ -70,6 +84,10 @@ step - 4
 		spring.datasource.password=manu
 		spring.datasource.driver-class-name=org.h2.Driver
 		spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+
+step - 5
+	-> use Swagger to test and document the API
+		-> create a config class
 		
 
 #Tips
